@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <style>
+    .calculator {
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="text"] {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 18px;
+    }
+    button {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" value="0">
+    <div>
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="clearDisplay()">C</button>
+    </div>
+    <div>
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="operate('+')">+</button>
+    </div>
+    <div>
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="operate('-')">-</button>
+    </div>
+    <div>
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="operate('*')">*</button>
+      <button onclick="operate('/')">/</button>
+    </div>
+  </div>
+
+  <script>
+    let displayValue = '0';
+    let operator = '';
+    let firstOperand = 0;
+
+    function appendToDisplay(value) {
+      if (displayValue === '0' || displayValue === 'Error') {
+        displayValue = value;
+      } else {
+        displayValue += value;
+      }
+      document.getElementById('display').value = displayValue;
+    }
+
+    function clearDisplay() {
+      displayValue = '0';
+      document.getElementById('display').value = displayValue;
+    }
+
+    function operate(op) {
+      firstOperand = parseFloat(displayValue);
+      operator = op;
+      displayValue = '0';
+      document.getElementById('display').value = displayValue;
+    }
+
+    function calculate() {
+      const secondOperand = parseFloat(displayValue);
+      switch (operator) {
+        case '+':
+          displayValue = (firstOperand + secondOperand).toString();
+          break;
+        case '-':
+          displayValue = (firstOperand - secondOperand).toString();
+          break;
+        case '*':
+          displayValue = (firstOperand * secondOperand).toString();
+          break;
+        case '/':
+          if (secondOperand === 0) {
+            displayValue = 'Error';
+          } else {
+            displayValue = (firstOperand / secondOperand).toString();
+          }
+          break;
+        default:
+          break;
+      }
+      document.getElementById('display').value = displayValue;
+    }
+  </script>
+</body>
+</html>
